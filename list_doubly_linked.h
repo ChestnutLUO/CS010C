@@ -1,5 +1,12 @@
-// TODO: include guard
-// TODO: What else do you need to include?
+#ifndef LIST_DOUBLY_LINKED_H_
+#define LIST_DOUBLY_LINKED_H_
+// DONE: include guard
+
+#include <cassert>
+#include <memory>
+#include <stdexcept>
+#include <utility>
+// DONE: What else do you need to include?
 
 /**
  * Implementation of a List ADT using a doubly linked list data structure with smart pointers.
@@ -13,23 +20,46 @@
 // TODO: Q 1.1 Create a templated class ListDoublyLinked 
 // based on the ListSinglyLinked class studied in class. 
 // What extra data members do you need for this implementation?
+template <typename T>
 class ListDoublyLinked {
 private:
     struct Node {
-        // TODO: Define the node structure
+        T item;
+        std::unique_ptr<Node> next;
+        Node* previous;
+        // DONE: Define the node structure
         // Hint: What data does each node need to store?
         // Hint: How should you handle forward vs backward pointers with smart pointers?
     };
 
-    // TODO: Q 1.2 How would you slightly change this previous data structure to use smart pointers? 
+    // DONE: Q 1.2 How would you slightly change this previous data structure to use smart pointers? 
     // Explain why it would be a good design in a comment.
-
-    // TODO: Define private data members for your list
+    // A 1.2: Using smart pointrt can help you prevent from memory leak and auomaticaly 
+    // implement destructor.
+    std::unique_ptr<Node> head = nullptr;
+    size_t cur_size = 0;
+    // DONE: Define private data members for your list
 
     // TODO: Implement helper method to get node at position
     // Q 1.3 Now implement private method GetNode() which returns a pointer to a node in the list at a given position.
     // Return pointer on node located as position @pos
-    Node* GetNode(unsigned int pos);
+    Node* GetNodey(size_t pos){
+        assert(pos < cur_size);
+        if(pos>=(cur_size/2)){
+            Node* n = tail.get();
+            pos = cur_size - pos - 1;
+            while (pos--) {
+                n = n->previous;
+            }
+            return n;
+        }else{
+            Node* n = head.get();
+            while (pos--) {
+                n = n->next.get();
+            }
+            return n;
+        }
+    }
 
 public:
     // TODO: Q 2.1 Implement a default constructor and destructor.
@@ -57,3 +87,6 @@ public:
     void Insert(const T &item, const unsigned int pos);
 
 };
+
+#endif // !LIST_DOUBLY_LINKED_H_
+
