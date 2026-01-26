@@ -11,15 +11,15 @@
  */
 template <typename T>
 class ListSinglyLinked {
-private:
+ private:
     struct Node {
         T item;
         std::unique_ptr<Node> next;
     };
-    
+
     std::unique_ptr<Node> head = nullptr;
     size_t cur_size = 0;
-    
+
     Node* GetNode(size_t pos) {
         assert(pos < cur_size);
         Node* n = head.get();
@@ -29,15 +29,15 @@ private:
         return n;
     }
 
-public:
+ public:
     ListSinglyLinked() = default;
     ~ListSinglyLinked() = default;
-    
+
     // Return number of items in list
     size_t Size() {
         return cur_size;
     }
-    
+
     // Return item at position @pos
     const T& Get(const size_t pos) {
         if (pos >= cur_size) {
@@ -46,7 +46,7 @@ public:
         auto n = GetNode(pos);
         return n->item;
     }
-    
+
     // Return position of first occurrence of @item (-1 if not found)
     int Find(const T& item) {
         int i = 0;
@@ -57,7 +57,7 @@ public:
         }
         return -1;
     }
-    
+
     // Remove item at position @pos
     void Remove(const size_t pos) {
         if (pos >= cur_size) {
@@ -75,7 +75,7 @@ public:
         }
         cur_size--;
     }
-    
+
     // Insert @item at position @pos
     void Insert(const T& item, const size_t pos) {
         if (pos > cur_size) {
@@ -97,4 +97,4 @@ public:
     }
 };
 
-#endif // LIST_SINGLY_LINKED_H_
+#endif  // LIST_SINGLY_LINKED_H_
