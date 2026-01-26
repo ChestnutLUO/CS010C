@@ -23,11 +23,11 @@ template <typename T> class ListDoublyLinked {
 
   std::unique_ptr<Node> head = nullptr;
   Node *tail = nullptr;
-  size_t cur_size = 0;
+  unsigned int cur_size = 0;
 
   // Q 1.3 GetNode() returns a pointer to a node in the list at a given
   // position. Return pointer on node located as position @pos
-  Node *GetNode(size_t pos) {
+  Node *GetNode(unsigned int pos) {
     assert(pos < cur_size);
     if (pos >= (cur_size / 2)) {
       Node *n = tail;
@@ -45,7 +45,7 @@ template <typename T> class ListDoublyLinked {
     }
   }
 
-  Node *GetNode(size_t pos) const {
+  Node *GetNode(unsigned int pos) const {
     assert(pos < cur_size);
     if (pos >= (cur_size / 2)) {
       Node *n = tail;
@@ -70,10 +70,10 @@ template <typename T> class ListDoublyLinked {
   ~ListDoublyLinked() = default;
 
   // Q 2.2 Size() method - Return number of items in list
-  size_t Size() const { return cur_size; }
+  unsigned int Size() const { return cur_size; }
 
   // Q 2.3 Get() method - Return item at position @pos
-  const T &Get(const size_t pos) const {
+  const T &Get(const unsigned int pos) const {
     if (pos >= cur_size) {
       throw std::out_of_range("Position out of range!");
     }
