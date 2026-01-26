@@ -145,7 +145,40 @@ class ListDoublyLinked {
     // TODO: Q 2.6 Discuss the different scenarios for item insertion.
     // Based on the discussion above, implement the Insert method.
     // Insert @item at position @pos
-    void Insert(const T &item, const unsigned int pos);
+    void Insert(const T &item, const unsigned int pos){
+        if(pos > cur_size){
+            throw std::out_of_range("Position out of range!");
+        }
+
+        auto new_node = std::make_unique<Node>();
+        new_node->item = item;
+
+        if(pos == 0){
+            // Insert at head
+            new_node->next = std::move(head);
+            new_node->previous = nullptr;
+            if(new_node->next){
+                new_node->next->previous = new_node.get();
+            }else{
+                tail = new_node.get();
+            }
+            head = std::move(new_node);
+        }else if(pos == cur_size){
+            // Insert at tail
+            new_node->next = nullptr;
+            new_node->previous = tail;
+            tail->next = std::move(new_node);
+            tail = tail->next.get();
+        }else{
+            // Insert in middle
+            Node* prev_node = GetNode(pos - 1);
+            new_node->next = std::move(prev_node->next);
+            new_node->previous = prev_node;
+            new_node->next->previous = new_node.get();
+            prev_node->next = std::move(new_node);
+        }
+        cur_size++;
+    }
 
 };
 
