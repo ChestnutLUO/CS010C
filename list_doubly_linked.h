@@ -20,6 +20,12 @@ template <typename T> class ListDoublyLinked {
 
   // Q 1.2: Using smart pointers can help prevent memory leaks and
   // automatically implement destructor.
+  // We use std::unique_ptr for 'next' to represent unique ownership of the
+  // following node, ensuring automatic memory management.
+  // We use a raw pointer for 'previous' to denote a non-owning reference.
+  // This avoids circular ownership (which would prevent the destructor from
+  // running) and prevents double-free issues since the previous node is
+  // already owned by its predecessor.
 
   std::unique_ptr<Node> head = nullptr;
   Node *tail = nullptr;
