@@ -121,10 +121,7 @@ template <typename T> class ListDoublyLinked {
   //
   // Remove item at position @pos
   void Remove(const unsigned int pos) {
-    if (pos > cur_size) {
-    throw std::out_of_range("Position out of range!");
-    }
-    if (!head) {
+    if (pos >= cur_size || !head) {
       return;
     } else if (pos == 0) {
       head = std::move(head->next);
