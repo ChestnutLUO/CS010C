@@ -63,6 +63,24 @@ class ListDoublyLinked {
             }
         }
 
+        Node* GetNode(size_t pos) const{
+            assert(pos < cur_size);
+            if(pos>=(cur_size/2)){
+                Node* n = tail;
+                pos = cur_size - pos - 1;
+                while (pos--) {
+                    n = n->previous;
+                }
+                return n;
+            }else{
+                Node* n = head.get();
+                while (pos--){
+                    n = n->next.get();
+                }
+                return n;
+            }
+        }
+
     public:
     // TODO: Q 2.1 Implement a default constructor and destructor.
 
@@ -90,7 +108,7 @@ class ListDoublyLinked {
     int Find(const T &item){
         Node* current = head.get();
         int pos = 0;
-        for(;current;current=current.next->get(),pos++){
+        for(;current;current=current->next.get(),pos++){
             if(current->item==item){
                 return pos;
             }
@@ -102,8 +120,25 @@ class ListDoublyLinked {
     // Using these possible combinations, implement the Remove method.
     // Remove item at position @pos
     void Remove(const unsigned int pos){
-        if(!head){
+        if(!head || pos >= cur_size){
             return;
+        }else if(pos == 0){
+            head = std::move(head->next);
+            if(!head){
+                tail = nullptr;
+            }else{
+                head->previous = nullptr;
+            }
+            cur_size--;
+        }else{
+            Node* current = GetNode(pos);
+            if(current->next){
+                current->next->previous=current->previous;
+            }else{
+                tail = current->previous;
+            }
+            current->previous->next=std::move(current->next);
+            cur_size--;
         }
     }
 
