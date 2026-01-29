@@ -22,6 +22,11 @@ class Sighting {
     ~Sighting() = default;
     int get_signature() const { return signature; }
 
+    bool operator<(const Sighting& other) const {
+        if (signature != other.signature) return signature < other.signature;
+        return speed < other.speed;
+    }
+
     friend std::ostream& operator<<(std::ostream& out, const Sighting& s) {
         out << "Sighting(speed=" << s.speed << ", brightness=" << s.brightness << ", signature=" << s.signature << ")";
         return out;
@@ -122,8 +127,8 @@ int main(int argc, char* argv[]) {
             match_count = linearSearch(sighting_record, signatures);
             break;
         case 'b':
-            // std::sort(sighting_record.begin(), sighting_record.end());
-            // match_count = binarySearch(sighting_record, signatures);
+            std::sort(sighting_record.begin(), sighting_record.end());
+            match_count = binarySearch(sighting_record, signatures);
             break;
     }
     auto end = std::chrono::high_resolution_clock::now();
