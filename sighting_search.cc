@@ -16,7 +16,7 @@ class Sighting {
 
    public:
     Sighting(int speed = 0, int brightness = 0) : speed(speed), brightness(brightness) {
-        this->signature = (std::ceil((speed * brightness) / 10));
+        this->signature = (std::ceil((speed * brightness) / 10.0));
     }
 
     ~Sighting() = default;
