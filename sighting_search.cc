@@ -52,7 +52,27 @@ int linearSearch(const std::vector<Sighting> sightings, const std::vector<int> s
 }
 
 // TODO: Implement binary search function
-int binarySearch(std::vector<Sighting> sorted_sightings, std::vector<int> signatures) { return 0; }
+int binarySearch(std::vector<Sighting> sorted_sightings, std::vector<int> signatures) {
+    int count = 0;
+    for (auto i : signatures) {
+        int l = 0;
+        int r = sorted_sightings.size() - 1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if (i == sorted_sightings.at(mid).get_signature()) {
+                count++;
+                break;
+            } else {
+                if (sorted_sightings.at(mid).get_signature() < i) {
+                    l = mid + 1;
+                } else {
+                    r = mid - 1;
+                }
+            }
+        }
+    }
+    return count;
+}
 
 int main(int argc, char* argv[]) {
     // TODO: Check command line arguments
