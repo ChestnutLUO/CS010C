@@ -16,6 +16,9 @@ template <typename T> Stack<T> Sort(Stack<T> &s1) {
     s2.Push(temp);
   }
   return s2;
+  // Answer to Q1.1:
+  // time Complexity 1+2+3+...+(n-1) = (n(n-1))/2 ≈ O(n^2)
+  // space Complexity: S2: O(n) temp O(1) ≈ O(n)
 }
 
 #ifndef NO_MAIN // Only compile main if NO_MAIN is not defined
