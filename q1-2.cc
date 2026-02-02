@@ -3,8 +3,10 @@
 #include "stack_vector.h"
 
 template <typename T>
+
 void DeleteMiddleElement(Stack<T> &s, unsigned int n, unsigned int curr = 0) {
-  if (s.empty())
+
+  if (s.Size() == 0)
     return;
 
   T temp = s.Top();

@@ -6,10 +6,10 @@ template <typename T> Stack<T> Sort(Stack<T> &s1) {
   // TODO: Sort the stack s1 and return the sorted stack
   Stack<T> s2;
   T temp;
-  while (!s1.empty()) {
+  while (s1.Size() != 0) {
     temp = s1.Top();
     s1.Pop();
-    while (!s2.empty() && (temp > s2.Top())) {
+    while (s2.Size() != 0 && (temp > s2.Top())) {
       s1.Push(s2.Top());
       s2.Pop();
     }
