@@ -5,23 +5,36 @@
 template<typename T>
 class Queue {
  private:
-        // TODO: Define private members for your queue
+        Stack<T> s1, s2;
 
  public:
         void Push(const T &item) {
-            // TODO: Push to the queue
-
+            s1.Push(item);
         }
 
         T Pop() {
-            // TODO: Pop from the queue 
-
+            if (s2.empty()) {
+                if (s1.empty()) {
+                    throw std::out_of_range("Queue is empty");
+                }
+                while (!s1.empty()) {
+                    s2.Push(s1.Top());
+                    s1.Pop();
+                }
+            }
+            T val = s2.Top();
+            s2.Pop();
+            return val;
         }
 
         size_t Size() {
-            // TODO: Return the size of the queue
-
+            return s1.Size() + s2.Size();
         }
+
+        // Answer to Q2:
+        // Push() time complexity: O(1)
+        // Pop() time complexity: O(1) amortized, O(n) worst case
+        // Size() time complexity: O(1)
 };
 
 #ifndef NO_MAIN  // Only compile main if NO_MAIN is not defined
