@@ -2,8 +2,8 @@
 #define STACK_VECTOR_H
 
 #include <cstddef>
-#include <vector>
 #include <stdexcept>
+#include <vector>
 
 template <typename T> class Stack {
 private:
@@ -33,4 +33,4 @@ public:
   size_t Size() const { return _data.size(); }
 };
 
-#endif // STACK_VECTOR_H
+#endif // !STACK_VECTOR_H
