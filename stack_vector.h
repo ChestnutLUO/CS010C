@@ -15,7 +15,14 @@ public:
 
   void Push(T in) { _data.push_back(in); }
 
-  T Top() const {
+  T& Top() {
+    if (_data.empty()) {
+      throw std::out_of_range("Stack is empty");
+    }
+    return _data.back();
+  }
+
+  const T& Top() const {
     if (_data.empty()) {
       throw std::out_of_range("Stack is empty");
     }
