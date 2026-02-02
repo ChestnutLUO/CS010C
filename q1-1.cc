@@ -1,6 +1,9 @@
+#ifndef NO_MAIN
 #include <iostream>
-
 #include "stack_vector.h"
+#else
+#include <iostream>
+#endif
 
 template <typename T> Stack<T> Sort(Stack<T> &s1) {
   // TODO: Sort the stack s1 and return the sorted stack

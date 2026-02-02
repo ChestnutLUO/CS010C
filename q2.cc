@@ -1,6 +1,10 @@
+#ifndef NO_MAIN
 #include <iostream>
-// You can only use stack_vector.h to implement this queue
 #include "stack_vector.h"
+#else
+#include <iostream>
+#endif
+// You can only use stack_vector.h to implement this queue
 
 template <typename T> class Queue {
 private:

@@ -1,6 +1,9 @@
+#ifndef NO_MAIN
 #include <iostream>
-
 #include "stack_vector.h"
+#else
+#include <iostream>
+#endif
 
 template <typename T>
 
