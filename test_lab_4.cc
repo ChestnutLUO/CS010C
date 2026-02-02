@@ -174,7 +174,7 @@ TEST(QueueTest, InterleavedOps) {
   Queue<int> q;
   q.Push(10);
   q.Push(20);
-  EXPECT_EQ(q.Pop(), 10); // 20 left
+  EXPECT_EQ(q.Pop(), 10);
   q.Push(30);             // 20, 30
   EXPECT_EQ(q.Pop(), 20);
   EXPECT_EQ(q.Pop(), 30);
