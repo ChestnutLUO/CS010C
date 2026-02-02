@@ -6,26 +6,21 @@
 #endif
 
 template <typename T>
-unsigned int DeleteMiddleElement(Stack<T> &s, unsigned int n,
-                                 unsigned int curr = 0) {
-  // Base case: empty stack or reached bottom
-  if (s.Size() == 0 || n == 0)
-    return 0;
+void DeleteMiddleElement(Stack<T> &s, unsigned int n, unsigned int curr = 0) {
+  if (s.Size() == 0)
+    return;
 
   T temp = s.Top();
   s.Pop();
 
-  // Check if this is the middle element (indexed from bottom)
-  if (curr == n - 1 - n / 2) {
-    return 0;
+  // 删除从栈顶数的“中间元素”
+  if (curr == (n - 1) / 2) {
+    return;
   }
 
   DeleteMiddleElement(s, n, curr + 1);
 
   s.Push(temp);
-
-  return 0;
-
   // Answer to Q1.2:
   // time Complexity: O(n)
   // space Complexity: O(n)
