@@ -20,7 +20,7 @@ q2: q2.cc stack_vector.h
 
 # Compile test_lab_4 with Google Test
 test_lab_4: test_lab_4.cc q1-1.cc q1-2.cc q2.cc stack_vector.h
-	$(CXX) $(CXXFLAGS) $(GTEST_FLAGS) -o test_lab_4 test_lab_4.cc
+	$(CXX) $(CXXFLAGS) -o test_lab_4 test_lab_4.cc $(GTEST_FLAGS)
 
 # Clean rule: Remove all compiled files
 clean:
