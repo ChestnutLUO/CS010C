@@ -1,7 +1,7 @@
 # Compiler and flags
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Werror
-GTEST_FLAGS = -lgtest -lgtest_main -pthread
+GTEST_FLAGS = -lgtest -pthread
 
 # Default target: build all executables
 all: q1-1 q1-2 q2 test_lab_4
