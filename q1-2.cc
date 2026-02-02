@@ -1,12 +1,13 @@
 #ifndef NO_MAIN
-#include <iostream>
 #include "stack_vector.h"
+#include <iostream>
 #else
 #include <iostream>
 #endif
 
 template <typename T>
-unsigned int DeleteMiddleElement(Stack<T> &s, unsigned int n, unsigned int curr = 0) {
+unsigned int DeleteMiddleElement(Stack<T> &s, unsigned int n,
+                                 unsigned int curr = 0) {
   // Base case: empty stack or reached bottom
   if (s.Size() == 0 || n == 0)
     return 0;
@@ -30,7 +31,7 @@ unsigned int DeleteMiddleElement(Stack<T> &s, unsigned int n, unsigned int curr 
   // space Complexity: O(n)
 }
 
-#ifndef NO_MAIN // Only compile main if NO_MAIN is not defined
+#ifndef NO_MAIN
 int main() {
   Stack<int> s1;
 

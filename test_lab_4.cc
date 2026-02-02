@@ -1,6 +1,6 @@
 #include "stack_vector.h"
 #include <gtest/gtest.h>
-#define NO_MAIN // This prevents main() from being included
+#define NO_MAIN
 #include "q1-1.cc"
 #include "q1-2.cc"
 #include "q2.cc"
@@ -178,7 +178,7 @@ TEST(QueueTest, InterleavedOps) {
   q.Push(30);             // 20, 30
   EXPECT_EQ(q.Pop(), 20);
   EXPECT_EQ(q.Pop(), 30);
-  EXPECT_TRUE(q.Size() == 0);
+  EXPECT_EQ(q.Size(), 0);
 }
 
 TEST(QueueTest, EmptyQueueThrows) {

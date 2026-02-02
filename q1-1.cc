@@ -1,6 +1,6 @@
 #ifndef NO_MAIN
-#include <iostream>
 #include "stack_vector.h"
+#include <iostream>
 #else
 #include <iostream>
 #endif
@@ -24,7 +24,7 @@ template <typename T> Stack<T> Sort(Stack<T> &s1) {
   // space Complexity: S2: O(n) temp O(1) ≈ O(n)
 }
 
-#ifndef NO_MAIN // Only compile main if NO_MAIN is not defined
+#ifndef NO_MAIN
 int main() {
   Stack<int> s1;
 

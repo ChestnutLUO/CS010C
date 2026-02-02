@@ -1,16 +1,16 @@
 #ifndef NO_MAIN
-#include <iostream>
 #include "stack_vector.h"
+#include <iostream>
 #else
 #include <iostream>
 #endif
 // You can only use stack_vector.h to implement this queue
 
 template <typename T> class Queue {
-private:
+ private:
   Stack<T> s1, s2;
 
-public:
+ public:
   void Push(const T &item) { s1.Push(item); }
 
   T Pop() {
@@ -36,7 +36,7 @@ public:
   // Size() time complexity: O(1)
 };
 
-#ifndef NO_MAIN // Only compile main if NO_MAIN is not defined
+#ifndef NO_MAIN
 int main() {
   Queue<int> q1;
 
