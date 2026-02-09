@@ -19,12 +19,12 @@ class BST {
   // Print tree in-order
   void Print();
   // Lowest common ancestor
-  const K& LCA(const K& key1, const K& key2);
+  const K &LCA(const K &key1, const K &key2);
   // Check if tree is BST
   bool CheckBST();
 
- private:
-  struct Node{
+private:
+  struct Node {
     K key;
     std::unique_ptr<Node> left;
     std::unique_ptr<Node> right;
@@ -32,55 +32,55 @@ class BST {
   std::unique_ptr<Node> root;
 
   // Useful recursive helper methods
-  Node* Min(Node *n);
+  bool Contains(Node *crr_node, const K &key);
+  //
+  Node *Min(Node *n);
   void Insert(std::unique_ptr<Node> &n, const K &key);
   void Remove(std::unique_ptr<Node> &n, const K &key);
   void Print(Node *n, int level);
 };
 
 // TODO: Q2.1
-template <typename K>
-bool BST<K>::Contains(const K &key) {
-  return;
+template <typename K> bool BST<K>::Contains(const K &key) {
+  if (!root)
+    return false;
+
+  return Contains(root.get(), key);
 }
 
-// TODO: Q2.2
-template <typename K>
-const K& BST<K>::LCA(const K& key1, const K& key2) {
-  return;
+template <typename K> bool BST<K>::Contains(Node *crr_node, const K &key) {
+  if (crr_node == nullptr)
+    return false;
+
+  if (crr_node->key == key)
+    return true;
+
+  return (key < crr_node->key) ? Contains(crr_node->left.get(), key)
+                                : Contains(crr_node->right.get(), key);
 }
 
 // TODO: Q2.3
-template <typename K>
-bool BST<K>::CheckBST() {
-  return;
-}
+template <typename K> bool BST<K>::CheckBST() { return false; }
 
-template <typename K>
-const K& BST<K>::Max(void) {
+template <typename K> const K &BST<K>::Max(void) {
   Node *n = root.get();
   while (n->right)
-	  n = n->right.get();
+    n = n->right.get();
   return n->key;
 }
 
-template <typename K>
-const K& BST<K>::Min(void) {
+template <typename K> const K &BST<K>::Min(void) {
   return Min(root.get())->key;
 }
 
-template <typename K>
-typename BST<K>::Node* BST<K>::Min(Node *n) {
+template <typename K> typename BST<K>::Node *BST<K>::Min(Node *n) {
   if (n->left)
     return Min(n->left.get());
   else
     return n;
 }
 
-template <typename K>
-void BST<K>::Insert(const K &key) {
-  Insert(root, key);
-}
+template <typename K> void BST<K>::Insert(const K &key) { Insert(root, key); }
 
 template <typename K>
 void BST<K>::Insert(std::unique_ptr<Node> &n, const K &key) {
@@ -94,15 +94,13 @@ void BST<K>::Insert(std::unique_ptr<Node> &n, const K &key) {
     std::cerr << "Key " << key << " already inserted!\n";
 }
 
-template <typename K>
-void BST<K>::Remove(const K &key) {
-  Remove(root, key);
-}
+template <typename K> void BST<K>::Remove(const K &key) { Remove(root, key); }
 
 template <typename K>
 void BST<K>::Remove(std::unique_ptr<Node> &n, const K &key) {
   // Key not found
-  if (!n) return;
+  if (!n)
+    return;
 
   if (key < n->key) {
     Remove(n->left, key);
@@ -121,18 +119,16 @@ void BST<K>::Remove(std::unique_ptr<Node> &n, const K &key) {
   }
 }
 
-template <typename K>
-void BST<K>::Print() {
+template <typename K> void BST<K>::Print() {
   Print(root.get(), 1);
   std::cout << std::endl;
 }
 
-template <typename K>
-void BST<K>::Print(Node *n, int level) {
-  if (!n) return;
+template <typename K> void BST<K>::Print(Node *n, int level) {
+  if (!n)
+    return;
 
   Print(n->left.get(), level + 1);
-  std::cout << n->key
-      << " [" << level << "] ";
+  std::cout << n->key << " [" << level << "] ";
   Print(n->right.get(), level + 1);
 }
