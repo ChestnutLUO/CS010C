@@ -50,7 +50,7 @@ void LevelIter(Node *root) {
   }
 }
 
-#ifndef NO_MAIN // Only compile main if NO_MAIN is not defined
+#ifndef NO_MAIN  // Only compile main if NO_MAIN is not defined
 int main() {
   // Statically build a binary tree
   std::unique_ptr<Node> nj(new Node{'j'});

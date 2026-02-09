@@ -19,12 +19,12 @@ int main() {
   std::cout << "Tree contains 23? "
       << bst.Contains(23) << "\n";
 
-  //Q2.2
+  // Q2.2
   std::cout << "bst.LCA(8, 12) = " << bst.LCA(8, 12) << "\n";
   std::cout << "bst.LCA(8, 7) = " << bst.LCA(8, 7) << "\n";
   std::cout << "bst.LCA(25, 12) = " << bst.LCA(25, 12) << "\n";
 
-  //Q2.3
+  // Q2.3
   std::cout << "CheckBST: " << bst.CheckBST() << "\n";
 
   return 0;
