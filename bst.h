@@ -80,13 +80,15 @@ template <typename K> const K &BST<K>::LCA(const K &key1, const K &key2) {
 
 // TODO: Q2.3
 template <typename K> bool BST<K>::CheckBST() {
+  if (!root)
+    return true;
   return CheckBST(root.get(), this->Min(), this->Max());
 }
 
 template <typename K> bool BST<K>::CheckBST(Node *root, K min, K max) {
   if (!root)
     return true;
-  if (root->key < min || root->key > max) {
+  if (root->key <= min || root->key >= max) {
     return false;
   }
   return CheckBST(root->left.get(), min, root->key) &&
