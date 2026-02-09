@@ -33,6 +33,7 @@ private:
 
   // Useful recursive helper methods
   bool Contains(Node *crr_node, const K &key);
+  bool CheckBST(Node *root, K min, K max);
   //
   Node *Min(Node *n);
   void Insert(std::unique_ptr<Node> &n, const K &key);
@@ -78,7 +79,19 @@ template <typename K> const K &BST<K>::LCA(const K &key1, const K &key2) {
 }
 
 // TODO: Q2.3
-template <typename K> bool BST<K>::CheckBST() { return false; }
+template <typename K> bool BST<K>::CheckBST() {
+  return CheckBST(root.get(), this->Min(), this->Max());
+}
+
+template <typename K> bool BST<K>::CheckBST(Node *root, K min, K max) {
+  if (!root)
+    return true;
+  if (root->key < min || root->key > max) {
+    return false;
+  }
+  return CheckBST(root->left.get(), min, root->key) &&
+         CheckBST(root->right.get(), root->key, max);
+}
 
 template <typename K> const K &BST<K>::Max(void) {
   Node *n = root.get();
