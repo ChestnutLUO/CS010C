@@ -56,7 +56,25 @@ template <typename K> bool BST<K>::Contains(Node *crr_node, const K &key) {
     return true;
 
   return (key < crr_node->key) ? Contains(crr_node->left.get(), key)
-                                : Contains(crr_node->right.get(), key);
+                               : Contains(crr_node->right.get(), key);
+}
+
+template <typename K> const K &BST<K>::LCA(const K &key1, const K &key2) {
+  const K lowkey = std::min(key1, key2);
+  const K highkey = std::max(key1, key2);
+  Node *n = root.get();
+  while (n) {
+    if (lowkey <= n->key && n->key <= highkey) {
+      return n->key;
+    } else {
+      if (n->key > highkey) {
+        n = n->left.get();
+      } else {
+        n = n->right.get();
+      }
+    }
+  }
+  exit(1);
 }
 
 // TODO: Q2.3
