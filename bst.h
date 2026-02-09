@@ -33,7 +33,7 @@ private:
 
   // Useful recursive helper methods
   bool Contains(Node *crr_node, const K &key);
-  bool CheckBST(Node *root, K min, K max);
+  bool CheckBST(Node *root, const K *min, const K *max);
   //
   Node *Min(Node *n);
   void Insert(std::unique_ptr<Node> &n, const K &key);
@@ -75,24 +75,25 @@ template <typename K> const K &BST<K>::LCA(const K &key1, const K &key2) {
       }
     }
   }
-  exit(1);
+  throw std::runtime_error("LCA: keys not found in tree");
 }
 
 // TODO: Q2.3
 template <typename K> bool BST<K>::CheckBST() {
-  if (!root)
-    return true;
-  return CheckBST(root.get(), this->Min(), this->Max());
+  return CheckBST(root.get(), nullptr, nullptr);
 }
 
-template <typename K> bool BST<K>::CheckBST(Node *root, K min, K max) {
+template <typename K> bool BST<K>::CheckBST(Node *root, const K *min, const K *max) {
   if (!root)
     return true;
-  if (root->key <= min || root->key >= max) {
+  if (min && root->key <= *min) {
     return false;
   }
-  return CheckBST(root->left.get(), min, root->key) &&
-         CheckBST(root->right.get(), root->key, max);
+  if (max && root->key >= *max) {
+    return false;
+  }
+  return CheckBST(root->left.get(), min, &root->key) &&
+         CheckBST(root->right.get(), &root->key, max);
 }
 
 template <typename K> const K &BST<K>::Max(void) {
