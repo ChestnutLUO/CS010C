@@ -1,13 +1,28 @@
 #include <iostream>
+#include <string>
 
 #include "trie.h"
 
 int main() {
-    // TODO: Q3.1 - Write a tester for your Trie implementation
-    // 1. Create a Trie object
-    // 2. Insert a few words
-    // 3. Test searching for exact words using Search()
-    // 4. Test searching for word prefixes using StartsWith()
+  Trie trie;
 
-    return 0;
+  trie.Insert("apple");
+  trie.Insert("app");
+  trie.Insert("bat");
+  trie.Insert("bath");
+  trie.Insert("banana");
+  trie.Insert("badapple");
+
+  std::cout << std::boolalpha;
+  std::cout << "Search app: " << trie.Search("app") << '\n';
+  std::cout << "Search apple: " << trie.Search("apple") << '\n';
+  std::cout << "Search apples: " << trie.Search("apples") << '\n';
+  std::cout << "Search ba: " << trie.Search("ba") << '\n';
+
+  std::cout << "StartsWith ap: " << trie.StartsWith("ap") << '\n';
+  std::cout << "StartsWith bat: " << trie.StartsWith("bat") << '\n';
+  std::cout << "StartsWith ban: " << trie.StartsWith("ban") << '\n';
+  std::cout << "StartsWithcat: " << trie.StartsWith("cat") << '\n';
+
+  return 0;
 }
