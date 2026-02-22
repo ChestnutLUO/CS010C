@@ -2,6 +2,9 @@
 #define SPLAYTREE_H_
 
 #include <iostream>
+#include <typeindex>
+
+enum rotate_direction { L, R };
 
 template <typename K> class SplayTree {
 private:
@@ -13,7 +16,9 @@ private:
   };
   Node *root;
   // helper methods
+  void Splay(Node *&c, const K &key);
   Node *find(const K &key);
+  void Rotate(Node *&c, rotate_direction);
 
 public:
   // public API
@@ -21,6 +26,42 @@ public:
   void Insert(const K &key);
   void Print();
 };
+
+template <typename K> void SplayTree<K>::Splay(Node *&c, const K &key) {
+  if (!c || c->key == key)
+    return;
+  if (c->key < key) {
+    if (!c->right)
+      return;
+    if (c->right->key > key) {
+      // Zig-Zag (right-left): target is in c->right->left
+      Splay(c->right->left, key);
+      Rotate(c->right, R);
+    } else {
+      // Zig-Zig (right-right): target is in c->right->right
+      Splay(c->right->right, key);
+      Rotate(c->right, L);
+    }
+    if (c->right) {
+      Rotate(c, L);
+    }
+  } else {
+    if (!c->left)
+      return;
+    if (c->left->key > key) {
+      // Zig-Zig (left-left): target is in c->left->left
+      Splay(c->left->left, key);
+      Rotate(c->left, R);
+    } else {
+      // Zig-Zag (left-right): target is in c->left->right
+      Splay(c->left->right, key);
+      Rotate(c->left, L);
+    }
+    if (c->left) {
+      Rotate(c, R);
+    }
+  }
+}
 
 // TODO: Implement the Contains method
 template <typename K> bool SplayTree<K>::Contains(const K &key) {
