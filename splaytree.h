@@ -7,7 +7,7 @@
 enum rotate_direction { L, R };
 
 template <typename K> class SplayTree {
-private:
+ private:
   // TODO: define internal data structure
   struct Node {
     K key;
@@ -21,7 +21,7 @@ private:
   void Rotate(Node *&c, rotate_direction);
   void printHelper(Node *n, int level);
 
-public:
+ public:
   // public API
   SplayTree() : root(nullptr) {}
   bool Contains(const K &key);
@@ -142,4 +142,4 @@ typename SplayTree<K>::Node *SplayTree<K>::find(const K &key) {
 
 // TODO: Q2.3 Implement Splay
 
-#endif // SPLAYTREE_H_
+#endif //  SPLAYTREE_H_
