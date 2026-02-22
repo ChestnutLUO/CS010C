@@ -85,7 +85,29 @@ template <typename K> bool SplayTree<K>::Contains(const K &key) {
 
 // TODO: Implement the Insert method (public version)
 template <typename K> void SplayTree<K>::Insert(const K &key) {
-  // Your implementation here
+  if (!root) {
+    root = new Node{key, nullptr, nullptr};
+    return;
+  }
+  Node *curr = root;
+  while (true) {
+    if (key < curr->key) {
+      if (!curr->left) {
+        curr->left = new Node{key, nullptr, nullptr};
+        break;
+      }
+      curr = curr->left;
+    } else if (key > curr->key) {
+      if (!curr->right) {
+        curr->right = new Node{key, nullptr, nullptr};
+        break;
+      }
+      curr = curr->right;
+    } else {
+      return;
+    }
+  }
+  Splay(root, key);
 }
 
 // TODO: Implement the Print method
