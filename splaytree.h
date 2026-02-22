@@ -19,9 +19,11 @@ private:
   void Splay(Node *&c, const K &key);
   Node *find(const K &key);
   void Rotate(Node *&c, rotate_direction);
+  void printHelper(Node *n, int level);
 
 public:
   // public API
+  SplayTree() : root(nullptr) {}
   bool Contains(const K &key);
   void Insert(const K &key);
   void Print();
@@ -40,13 +42,15 @@ template <typename K> void SplayTree<K>::Splay(Node *&c, const K &key) {
     if (!c->right)
       return;
     if (c->right->key > key) {
-      // Zig-Zag (right-left): target is in c->right->left
+      //  Zig-Zag (right-left): c->right->left
       Splay(c->right->left, key);
-      Rotate(c->right, R);
-    } else {
-      // Zig-Zig (right-right): target is in c->right->right
+      if (c->right->left)
+        Rotate(c->right, R);
+    } else if (c->right->key < key) {
+      //  Zig-Zig (right-right):c->right->right
       Splay(c->right->right, key);
-      Rotate(c->right, L);
+      if (c->right->right)
+        Rotate(c->right, L);
     }
     if (c->right) {
       Rotate(c, L);
@@ -55,13 +59,15 @@ template <typename K> void SplayTree<K>::Splay(Node *&c, const K &key) {
     if (!c->left)
       return;
     if (c->left->key > key) {
-      // Zig-Zig (left-left): target is in c->left->left
+      //  Zig-Zig (left-left): c->left->left
       Splay(c->left->left, key);
-      Rotate(c->left, R);
-    } else {
-      // Zig-Zag (left-right): target is in c->left->right
+      if (c->left->left)
+        Rotate(c->left, R);
+    } else if (c->left->key < key) {
+      //  Zig-Zag (left-right): c->left->right
       Splay(c->left->right, key);
-      Rotate(c->left, L);
+      if (c->left->right)
+        Rotate(c->left, L);
     }
     if (c->left) {
       Rotate(c, R);
@@ -71,8 +77,10 @@ template <typename K> void SplayTree<K>::Splay(Node *&c, const K &key) {
 
 // TODO: Implement the Contains method
 template <typename K> bool SplayTree<K>::Contains(const K &key) {
-  // Your implementation here
-  return false;
+  if (!root)
+    return false;
+  Splay(root, key);
+  return root->key == key;
 }
 
 // TODO: Implement the Insert method (public version)
@@ -84,11 +92,26 @@ template <typename K> void SplayTree<K>::Insert(const K &key) {
 // This should print an in-order traversal of the tree
 // in this format: "key1 (level), key2 (level), ..."
 // You may use this code: std::cout << key << " (" << level << "), ";
-template <typename K> void SplayTree<K>::Print() {
-  // Your implementation here
+template <typename K> void SplayTree<K>::Print() { printHelper(root, 0); }
+
+template <typename K> void SplayTree<K>::printHelper(Node *n, int level) {
+  if (!n)
+    return;
+  printHelper(n->left, level + 1);
+  std::cout << n->key << " (" << level << "), ";
+  printHelper(n->right, level + 1);
 }
 
-template <typename K> SplayTree<K>::Node *SplayTree<K>::find(const K &key) {}
+template <typename K>
+typename SplayTree<K>::Node *SplayTree<K>::find(const K &key) {
+  Node *curr = root;
+  while (curr) {
+    if (key == curr->key)
+      return curr;
+    curr = (key < curr->key) ? curr->left : curr->right;
+  }
+  return nullptr;
+}
 
 // TODO: Q2.1 What are the different **splay rotation cases** that must be
 // considered? Your answer:
