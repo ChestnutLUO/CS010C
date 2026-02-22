@@ -27,6 +27,12 @@ public:
   void Print();
 };
 
+template <typename K> void SplayTree<K>::Rotate(Node *&c, rotate_direction d) {
+  Node *s = d ? c->left : c->right;
+  d ? (c->left = s->right, s->right = c) : (c->right = s->left, s->left = c);
+  c = s;
+}
+
 template <typename K> void SplayTree<K>::Splay(Node *&c, const K &key) {
   if (!c || c->key == key)
     return;
