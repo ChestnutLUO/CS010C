@@ -23,6 +23,16 @@ template <typename K> class SplayTree {
 
  public:
   // public API
+
+  void destruct(Node* c) {
+      if(!c)
+          return;
+      destruct(c->left);
+      destruct(c->right);
+      delete c;
+      return;
+  }
+  ~SplayTree() {destruct(root);}
   SplayTree() : root(nullptr) {}
   bool Contains(const K &key);
   void Insert(const K &key);
@@ -142,4 +152,4 @@ typename SplayTree<K>::Node *SplayTree<K>::find(const K &key) {
 
 // TODO: Q2.3 Implement Splay
 
-#endif //  SPLAYTREE_H_
+#endif  //  SPLAYTREE_H_
