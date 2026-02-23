@@ -20,6 +20,7 @@ template <typename K> class SplayTree {
   Node *find(const K &key);
   void Rotate(Node *&c, rotate_direction);
   void printHelper(Node *n, int level);
+  Node *copyTree(Node *n);
 
  public:
   // public API
@@ -34,6 +35,14 @@ template <typename K> class SplayTree {
   }
   ~SplayTree() {destruct(root);}
   SplayTree() : root(nullptr) {}
+  SplayTree(const SplayTree &other) : root(copyTree(other.root)) {}
+  SplayTree &operator=(const SplayTree &other) {
+    if (this != &other) {
+      destruct(root);
+      root = copyTree(other.root);
+    }
+    return *this;
+  }
   bool Contains(const K &key);
   void Insert(const K &key);
   void Print();
@@ -143,6 +152,12 @@ typename SplayTree<K>::Node *SplayTree<K>::find(const K &key) {
     curr = (key < curr->key) ? curr->left : curr->right;
   }
   return nullptr;
+}
+
+template <typename K>
+typename SplayTree<K>::Node *SplayTree<K>::copyTree(Node *n) {
+  if (!n) return nullptr;
+  return new Node{n->key, copyTree(n->left), copyTree(n->right)};
 }
 
 // TODO: Q2.1 What are the different **splay rotation cases** that must be
