@@ -108,8 +108,13 @@ void KWayMerge(const std::string &infilename, const int num_ways) {
       node.value = next_value;
       node.file_index = top.file_index;
       min_heap.push(node);
-    } else {
-      input_files[top.file_index].close();
+    }
+  }
+
+  //  Close all input files explicitly
+  for (auto &file : input_files) {
+    if (file.is_open()) {
+      file.close();
     }
   }
 
