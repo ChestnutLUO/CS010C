@@ -18,7 +18,6 @@ struct HeapNode {
 //  orted in memory
 void CreateInitialRuns(const std::string &infilename, const int num_ways,
                        const int run_size) {
-
   std::ifstream ifs(infilename);
   if (!ifs.is_open()) {
     std::cerr << "Error: Cannot open input file " << infilename << '\n';
@@ -58,7 +57,6 @@ void CreateInitialRuns(const std::string &infilename, const int num_ways,
 }
 
 void KWayMerge(const std::string &infilename, const int num_ways) {
-
   std::vector<std::ifstream> input_files(num_ways);
   for (int i = 0; i < num_ways; ++i) {
     std::string temp_filename = infilename + "." + std::to_string(i);
