@@ -95,8 +95,32 @@ void TopologicalSort::FillInDegree(Graph G) {
 // 4. If sequence size != number of vertices, return empty vector (cycle
 // detected)
 // 5. Otherwise return sequence
+std::vector<int> TopologicalSort::LinearOrdering(Graph G) {
+  std::queue<int> q;
+  std::vector<int> sequence;
+
+  for (int v = 0; v < G.V(); v++) {
+    if (indegrees.at(v) == 0)
+      q.push(v);
+  }
+  while (!q.empty()) {
+    int v = q.front();
+    q.pop();
+    SetVisited(v);
+    sequence.push_back(v);
+    for (auto w : G.Adj(v)) {
+      if (--indegrees.at(w) == 0)
+        q.push(w);
+    }
+  }
+
+  if (sequence.size() != G.V())
+    return {};
+  order = sequence;
+  return sequence;
+}
 
 // TODO (Q2.4): What is the time complexity of this algorithm?
-// Answer:
+// Answer: O(E+V)
 
 #endif  // TOPOLOGICAL_SORT_H
