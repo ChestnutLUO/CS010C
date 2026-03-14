@@ -1,5 +1,6 @@
 #include "my_search_engine.h"
 
+#include <algorithm>
 #include <queue>
 #include <unordered_set>
 #include <utility>
@@ -138,7 +139,7 @@ std::vector<std::string> MySearchEngine::Search(
       long page_idx = cur[0];
       double impact = page_disk_.Get(page_idx).impact;
       std::string url = page_disk_.Get(page_idx).url;
-      if (heap.size() < num_results) {
+      if (heap.size() < (size_t)(num_results)) {
         heap.push({impact, url});
       } else if (impact > heap.top().first) {
         heap.pop();
@@ -147,7 +148,9 @@ std::vector<std::string> MySearchEngine::Search(
       for (size_t i = 0; i < lists.size(); i++)
         pos[i]++;
     } else {
-      long max_idx = *std::max_element(cur.begin(), cur.end());
+      long max_idx = *std::max_element(
+          cur.begin(),
+          cur.end());  //  https://en.cppreference.com/w/cpp/algorithm/max_element.html
       for (size_t i = 0; i < lists.size(); i++)
         if (cur[i] < max_idx)
           pos[i]++;
