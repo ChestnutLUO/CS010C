@@ -6,7 +6,7 @@ LIB = my_search_engine.cc page_file.cc word_file.cc simple_browser.cc
 all: collect rank search
 
 collect: collect.cc $(LIB)
-	$(CXX) $(CXXFLAGS) -o collect collect.cc $(LIB):
+	$(CXX) $(CXXFLAGS) -o collect collect.cc $(LIB)
 
 rank: rank.cc $(LIB)
 	$(CXX) $(CXXFLAGS) -o rank rank.cc $(LIB)

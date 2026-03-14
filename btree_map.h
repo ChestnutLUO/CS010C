@@ -60,7 +60,8 @@ class BTreeMap {
     std::vector<Node*> children;  // Child pointers (empty if leaf)
     bool is_leaf;                 // True if this is a leaf node
 
-    explicit Node(bool leaf) : is_leaf(leaf) {}
+    explicit Node(bool leaf) : is_leaf(leaf) {
+    }
 
     // Return true if this node is full (has M-1 keys).
     bool IsFull(int order) const {
@@ -93,11 +94,11 @@ class BTreeMap {
 };
 
 // ===========================================================================
-// TODO: Implement all BTreeMap methods below.
 // ===========================================================================
 
 template <typename K, typename V>
-BTreeMap<K, V>::BTreeMap(int order) : order_(order), root_(nullptr), size_(0) {}
+BTreeMap<K, V>::BTreeMap(int order) : order_(order), root_(nullptr), size_(0) {
+}
 
 template <typename K, typename V>
 BTreeMap<K, V>::~BTreeMap() {
@@ -126,7 +127,8 @@ BTreeMap<K, V>& BTreeMap<K, V>::operator=(BTreeMap&& other) noexcept {
 
 template <typename K, typename V>
 void BTreeMap<K, V>::DestroyTree(Node* node) {
-  if (node == nullptr) return;
+  if (node == nullptr)
+    return;
   for (Node* child : node->children) {
     DestroyTree(child);
   }
@@ -134,27 +136,28 @@ void BTreeMap<K, V>::DestroyTree(Node* node) {
 }
 
 template <typename K, typename V>
-  // TODO: Search for key in the B-tree
-  // 1. Find position i in node->keys where key would fit
-  // 2. If keys[i] == key, set idx = i and return node
-  // 3. If node is a leaf, return nullptr (not found)
-  // 4. Otherwise, recurse into children[i]
+// 1. Find position i in node->keys where key would fit
+// 2. If keys[i] == key, set idx = i and return node
+// 3. If node is a leaf, return nullptr (not found)
+// 4. Otherwise, recurse into children[i]
 typename BTreeMap<K, V>::Node* BTreeMap<K, V>::Search(Node* node, const K& key,
                                                       int& idx) const {
-  if (node == nullptr) return nullptr;
+  if (node == nullptr)
+    return nullptr;
   size_t i = 0;
-  while (i < node->keys.size() && node->keys[i] < key) i++;
+  while (i < node->keys.size() && node->keys[i] < key)
+    i++;
   if (i < node->keys.size() && node->keys[i] == key) {
     idx = static_cast<int>(i);
     return node;
   }
-  if (node->is_leaf) return nullptr;
+  if (node->is_leaf)
+    return nullptr;
   return Search(node->children[i], key, idx);
 }
 
 template <typename K, typename V>
 void BTreeMap<K, V>::SplitChild(Node* parent, int i) {
-  // TODO: Split parent->children[i] which is full
   Node* child = parent->children[i];
 
   // 1. Create a new node for the right half
@@ -189,10 +192,10 @@ void BTreeMap<K, V>::SplitChild(Node* parent, int i) {
 
 template <typename K, typename V>
 void BTreeMap<K, V>::InsertNonFull(Node* node, const K& key, const V& value) {
-  // TODO: Insert into a non-full node
   // 1. Find position i where key should go
   size_t i = 0;
-  while (i < node->keys.size() && node->keys[i] < key) i++;
+  while (i < node->keys.size() && node->keys[i] < key)
+    i++;
 
   // 2. If key already exists at position i, update the value and return
   if (i < node->keys.size() && node->keys[i] == key) {
@@ -214,7 +217,8 @@ void BTreeMap<K, V>::InsertNonFull(Node* node, const K& key, const V& value) {
   if (node->children[i]->IsFull(order_)) {
     SplitChild(node, static_cast<int>(i));
     //    b. After split, determine which child to descend into
-    if (node->keys[i] < key) i++;
+    if (node->keys[i] < key)
+      i++;
   }
   //    c. Recurse into the appropriate child
   InsertNonFull(node->children[i], key, value);
@@ -222,7 +226,6 @@ void BTreeMap<K, V>::InsertNonFull(Node* node, const K& key, const V& value) {
 
 template <typename K, typename V>
 void BTreeMap<K, V>::Put(const K& key, const V& value) {
-  // TODO: Insert key-value pair
   // 1. If tree is empty, create a new root leaf node
   if (root_ == nullptr) {
     root_ = new Node(true);
@@ -249,7 +252,8 @@ template <typename K, typename V>
 V& BTreeMap<K, V>::Get(const K& key) {
   int idx;
   Node* node = Search(root_, key, idx);
-  if (node == nullptr) throw std::runtime_error("Key not found");
+  if (node == nullptr)
+    throw std::runtime_error("Key not found");
   return node->values[idx];
 }
 
@@ -257,7 +261,8 @@ template <typename K, typename V>
 const V& BTreeMap<K, V>::Get(const K& key) const {
   int idx;
   Node* node = Search(root_, key, idx);
-  if (node == nullptr) throw std::runtime_error("Key not found");
+  if (node == nullptr)
+    throw std::runtime_error("Key not found");
   return node->values[idx];
 }
 
@@ -269,31 +274,30 @@ bool BTreeMap<K, V>::ContainsKey(const K& key) const {
 
 template <typename K, typename V>
 size_t BTreeMap<K, V>::Size() const {
-  // TODO: Return size_
   return size_;
 }
 
 template <typename K, typename V>
 std::vector<K> BTreeMap<K, V>::Keys() const {
-  // TODO: Return all keys in sorted order using InOrderKeys
   std::vector<K> result;
-  if (root_ != nullptr) InOrderKeys(root_, result);
+  if (root_ != nullptr)
+    InOrderKeys(root_, result);
   return result;
 }
 
 template <typename K, typename V>
-  // TODO: In-order traversal
-  // For an internal node with k keys and k+1 children:
-  //   traverse child[0], output key[0],
-  //   traverse child[1], output key[1],
-  //   ...
-  //   traverse child[k-1], output key[k-1],
-  //   traverse child[k]
-  // For a leaf: simply add all keys to result
+// For an internal node with k keys and k+1 children:
+//   traverse child[0], output key[0],
+//   traverse child[1], output key[1],
+//   ...
+//   traverse child[k-1], output key[k-1],
+//   traverse child[k]
+// For a leaf: simply add all keys to result
 void BTreeMap<K, V>::InOrderKeys(const Node* node,
                                  std::vector<K>& result) const {
   if (node->is_leaf) {
-    for (const K& k : node->keys) result.push_back(k);
+    for (const K& k : node->keys)
+      result.push_back(k);
     return;
   }
   for (size_t i = 0; i < node->keys.size(); i++) {
