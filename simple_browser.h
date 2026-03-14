@@ -29,10 +29,14 @@ class SimpleBrowser {
   static std::string NormalizeUrl(const std::string& url);
 
   // Get all keywords on the current page.
-  std::vector<std::string> GetWords() const { return words_; }
+  std::vector<std::string> GetWords() const {
+    return words_;
+  }
 
   // Get all URLs linked from the current page.
-  std::vector<std::string> GetURLs() const { return urls_; }
+  std::vector<std::string> GetURLs() const {
+    return urls_;
+  }
 };
 
 #endif  // SIMPLE_BROWSER_H_
